@@ -22,11 +22,11 @@ parenthesis.stringify(['abc\\1', '123']) === 'abc(123)'
 
 #### `parenthesis(arg)`
 
-Call parse or stringify depending on a type of `arg`. If it is string - do parse, else - stringify.
+Call parse or stringify depending on a type of `arg`. If `arg` is string—do parse, else stringify.
 
 #### `parse(str [, brackets])`
 
-Parse parenthesis in a string `str` with optional `brackets`, like `'[]'`. Default `brackets` is `'()'`.
+Parse parenthesis in a string `str` with optional `brackets`, like `'[]'`. Default `brackets` are `'()'`.
 
 #### `stringify(refs [, brackets])`
 
