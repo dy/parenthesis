@@ -26,7 +26,7 @@ Call parse or stringify depending on a type of `arg`. If it is string - do parse
 
 #### `parse(str [, brackets])`
 
-Parse parenthesis in a string `str` with optional `brackets` example, like `'[]'`. Default `brackets` - `'()'`.
+Parse parenthesis in a string `str` with optional `brackets`, like `'[]'`. Default `brackets` is `'()'`.
 
 #### `stringify(refs [, brackets])`
 
