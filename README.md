@@ -18,7 +18,7 @@ First item in the result is initial string with parenthesis replaced with regexy
 parenthesis.stringify(['abc\\1', '123']) === 'abc(123)'
 ```
 
-# API
+## API
 
 #### `parenthesis(arg)`
 
