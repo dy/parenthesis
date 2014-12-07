@@ -13,7 +13,7 @@ parenthesis.parse(':click :on( :not( :nth-child(5) ) )');
 ]
 ```
 
-First item in the array is initial string with parenthesis referenced to anther items.
+First item in result is initial string with parenthesis replaced with regexy references to anther items.
 
 
 **Stringify** does backwise operation:
