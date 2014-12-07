@@ -9,10 +9,10 @@ parenthesis.parse(':click :on( :not( :nth-child(5) ) )');
 [ ':click :on\\1', ' :not\\2 ', ' :nth-child\\3 ', '5']
 ```
 
-First item in result is initial string with parenthesis replaced with regexy references to anther items.
+First item in the result is initial string with parenthesis replaced with regexy references to other items.
 
 
-**Stringify** does backwise operation:
+**Stringify** does backwise:
 
 ```js
 parenthesis.stringify(['abc\\1', '123']) === 'abc(123)'
