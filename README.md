@@ -13,7 +13,7 @@ parenthesis.parse(':click :on( :not( :nth-child(5) ) )');
 ]
 ```
 
-First item in the array is initial string, where parenthesis is replaced with regexy reference to other item in array.
+First item in the array is initial string with parenthesis referenced to anther items.
 
 
 **Stringify** does backwise operation:
@@ -26,15 +26,15 @@ parenthesis.stringify(['abc\\1', '123']) === 'abc(123)'
 
 Methods `parse` and `stringify` are available on `parenthesis`, which is the main package exports. You can also require needed method as `require('parenthesis/parse')` or `require('parenthesis/stringify')`.
 
-### `parenthesis(arg)`
+#### `parenthesis(arg)`
 
 Call parse or stringify depending on a type of `arg`. If it is string - do parse, else - stringify.
 
-### `parse(str [, brackets])`
+#### `parse(str [, brackets])`
 
 Parse parenthesis in a string `str` with optional `brackets` example, like `'[]'`. Default `brackets` - `'()'`.
 
-### `stringify(refs [, brackets])`
+#### `stringify(refs [, brackets])`
 
 Replace references in `refs`, starting from `refs[0]`. Return resulting string.
 
