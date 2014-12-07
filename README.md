@@ -5,7 +5,7 @@
 ```js
 parenthesis.parse(':click :on( :not( :nth-child(5) ) )');
 
-//result:
+//result
 [ ':click :on\\3', '5', ' :nth-child\\1 ', ' :not\\2 ']
 ```
 
@@ -20,17 +20,27 @@ parenthesis.stringify(['abc\\1', '123']) === 'abc(123)'
 
 ## API
 
+
 #### `parenthesis(arg)`
 
 Call parse or stringify depending on a type of `arg`. If `arg` is string—do parse, else stringify.
+
 
 #### `parse(str [, brackets])`
 
 Parse parenthesis in a string `str` with optional `brackets`, like `'[]'`. Default `brackets` are `'()'`.
 
-#### `stringify(refs [, brackets])`
 
-Replace references in `refs`, starting from `refs[0]`. Return resulting string.
+#### `stringify(refsList [, entry] [, brackets])`
+
+Compose string from `refsList`, starting from `entry` index. Example:
+
+```js
+parenthesis.stringify([ ':click :on\\3', '5', ' :nth-child\\1 ', ' :not\\2 '], 3);
+
+//result
+' :not( :nth-child(5) ) '
+```
 
 
 

@@ -100,6 +100,10 @@ describe('stringify', function(){
 	it.skip('escape reference', function(){
 		assert.equal(paren(escRes), esc);
 	});
+
+	it('entry point', function(){
+		assert.equal(paren([ ':click :on\\3', '5', ' :nth-child\\1 ', ' :not\\2 '], 3), ' :not( :nth-child(5) ) ');
+	});
 });
 
 
