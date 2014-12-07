@@ -1,4 +1,4 @@
-# parenthesis [![Build Status](https://travis-ci.org/dfcreative/paren.svg?branch=master)](https://travis-ci.org/dfcreative/paren) <a href="http://unlicense.org/UNLICENSE"><img src="http://upload.wikimedia.org/wikipedia/commons/6/62/PD-icon.svg" width="20"/></a>
+# parenthesis [![Build Status](https://travis-ci.org/dfcreative/parenthesis.svg?branch=master)](https://travis-ci.org/dfcreative/parenthesis) <a href="http://unlicense.org/UNLICENSE"><img src="http://upload.wikimedia.org/wikipedia/commons/6/62/PD-icon.svg" width="20"/></a>
 
 **Parse** parenthesises in a string:
 
