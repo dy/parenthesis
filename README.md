@@ -1,6 +1,6 @@
 # parenthesis [![Build Status](https://travis-ci.org/dfcreative/parenthesis.svg?branch=master)](https://travis-ci.org/dfcreative/parenthesis) <a href="http://unlicense.org/UNLICENSE"><img src="http://upload.wikimedia.org/wikipedia/commons/6/62/PD-icon.svg" width="20"/></a>
 
-**Parse** parenthesises in a string:
+**Parse** parentheses from a string:
 
 ```js
 parenthesis.parse(':click :on( :not( :nth-child(5) ) )');
@@ -9,7 +9,7 @@ parenthesis.parse(':click :on( :not( :nth-child(5) ) )');
 [ ':click :on\\1', ' :not\\2 ', ' :nth-child\\3 ', '5']
 ```
 
-First item in the result is initial string with parenthesis replaced with regexy references to other items.
+First item in the result is initial string with parentheses replaced with regexy references to other items.
 
 
 **Stringify** does backwise:
