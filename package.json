@@ -1,0 +1,38 @@
+{
+  "name": "parenthesis",
+  "version": "0.0.0",
+  "description": "Parse parenthesis in a string",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dfcreative/parenthesis.git"
+  },
+  "keywords": [
+    "paren",
+    "parenthesis",
+    "parse",
+    "brackets",
+    "parser",
+    "regexp",
+    "regex",
+    "stringify",
+    "tokenizer",
+    "replace"
+  ],
+  "author": {
+    "name": "Deema Yvanow",
+    "email": "dfcreative@gmail.com",
+    "url": "http://github.com/dfcreative"
+  },
+  "license": "unlicensed",
+  "bugs": {
+    "url": "https://github.com/dfcreative/parenthesis/issues"
+  },
+  "homepage": "https://github.com/dfcreative/parenthesis",
+  "devDependencies": {
+    "mocha": "~2.0.1"
+  }
+}
