@@ -20,8 +20,6 @@ parenthesis.stringify(['abc\\1', '123']) === 'abc(123)'
 
 # API
 
-Methods `parse` and `stringify` are available on `parenthesis`, which is the main package exports. You can also require needed method as `require('parenthesis/parse')` or `require('parenthesis/stringify')`.
-
 #### `parenthesis(arg)`
 
 Call parse or stringify depending on a type of `arg`. If it is string - do parse, else - stringify.
@@ -33,6 +31,7 @@ Parse parenthesis in a string `str` with optional `brackets` example, like `'[]'
 #### `stringify(refs [, brackets])`
 
 Replace references in `refs`, starting from `refs[0]`. Return resulting string.
+
 
 
 # Contribute
