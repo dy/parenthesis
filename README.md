@@ -5,12 +5,8 @@
 ```js
 parenthesis.parse(':click :on( :not( :nth-child(5) ) )');
 
-[
-	':click :on\\1',
-	' :not\\2 ',
-	' :nth-child\\3 ',
-	'5'
-]
+//result:
+[ ':click :on\\1', ' :not\\2 ', ' :nth-child\\3 ', '5']
 ```
 
 First item in result is initial string with parenthesis replaced with regexy references to anther items.
