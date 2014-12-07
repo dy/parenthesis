@@ -33,7 +33,7 @@ Parse parenthesis in a string `str` with optional `brackets`, like `'[]'`. Defau
 
 #### `stringify(refsList [, entry] [, brackets])`
 
-Compose string from `refsList`, starting from `entry` index. Example:
+Compose string from `refsList`, starting from `entry` index (by default is `0`). Example:
 
 ```js
 parenthesis.stringify([ ':click :on\\3', '5', ' :nth-child\\1 ', ' :not\\2 '], 3);
