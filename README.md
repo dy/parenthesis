@@ -6,7 +6,7 @@
 parenthesis.parse(':click :on( :not( :nth-child(5) ) )');
 
 //result:
-[ ':click :on\\1', ' :not\\2 ', ' :nth-child\\3 ', '5']
+[ ':click :on\\4', '5', ' :nth-child\\2 ', ' :not\\3 ']
 ```
 
 First item in the result is initial string with parentheses replaced with regexy references to other items.
