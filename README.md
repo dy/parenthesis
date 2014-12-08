@@ -15,7 +15,10 @@ First item in the result is initial string with parentheses replaced with regexy
 **Stringify** does backwise:
 
 ```js
-parenthesis.stringify([':click :on\\3', '5', ' :nth-child\\1 ', ' :not\\2 ']) === ':click :on( :not( :nth-child(5) ) )'
+parenthesis.stringify([':click :on\\3', '5', ' :nth-child\\1 ', ' :not\\2 '])
+
+//result
+':click :on( :not( :nth-child(5) ) )'
 ```
 
 ## API
@@ -28,7 +31,7 @@ Parse parenthesis in a string `str` with optional `brackets`, like `'[]'`. Defau
 
 #### `stringify([string,] refsList [, brackets])`
 
-Replace regexy references in `string` by the ones from `refList`. If string is undefined, use `refsList[0]`. Example:
+Replace regexy references in `string` with the ones from `refList`. If string is omitted, will be used `refsList[0]`. Example:
 
 ```js
 parenthesis.stringify(':not\\2', ['5', ':nth-child\\1']);
@@ -41,9 +44,9 @@ parenthesis.stringify(':not\\2', ['5', ':nth-child\\1']);
 
 # Contribute
 
+* Add double brackets (other parsing algorithm)
 * Add escaping (waiting for a use-case).
 * Add streaming version.
-* Pass array to the brackets, to use moustache brackets `['{{', '}}']`.
 
 
 [![NPM](https://nodei.co/npm/parenthesis.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/parenthesis/)

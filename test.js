@@ -47,6 +47,9 @@ var difRes = ['\\2', '4','123\\1'];
 var esc = 'a \\1 b ( 1 + 2 + \\3 + (4) ) ';
 var escRes = ['a \\\\1 b \\2 ', '4', ' 1 + 2 + \\\\3 + \\1'];
 
+//double
+var dbl = 'hello, {{ alex{{ pf }} }} ';
+var dblRes = ['hello, \\2', ' pf ', ' alex\\1'];
 
 
 describe('parse', function(){
@@ -74,6 +77,9 @@ describe('parse', function(){
 	it.skip('escape reference', function(){
 		assert.deepEqual(parse(esc), escRes);
 	});
+	it.skip('moustache', function(){
+		assert.deepEqual(parse(dbl, '{{}}'), dblRes);
+	});
 });
 
 describe('stringify', function(){
@@ -100,6 +106,9 @@ describe('stringify', function(){
 	});
 	it.skip('escape reference', function(){
 		assert.equal(tostr(escRes), esc);
+	});
+	it.skip('moustache', function(){
+		assert.deepEqual(tostr(dblRes, ['{{', '}}']), dbl);
 	});
 
 	it('custom string point', function(){
