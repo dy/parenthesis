@@ -31,7 +31,7 @@ Parse parenthesis in a string `str` with optional `brackets`, like `'[]'`. Defau
 
 #### `stringify([string,] refsList [, brackets])`
 
-Replace regexy references in `string` with the ones from `refList` (trivial templates). If string is omitted, will be used `refsList[0]`. Example:
+Replace regexy references in `string` with the ones from `refList` (like tiny templates). If string is omitted, will be used `refsList[0]`. Example:
 
 ```js
 parenthesis.stringify(':not\\2', ['5', ':nth-child\\1']);
