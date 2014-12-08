@@ -7,6 +7,8 @@
  *
  * @return {Array} A list with parsed parens, where 0 is initial string.
  */
+
+//TODO: implement sequential parser of this algorithm, compare performance.
 module.exports = function(str, bracket){
 	var res = [], prevStr;
 
