@@ -6,7 +6,7 @@
 parenthesis.parse(':click :on( :not( :nth-child(5) ) )');
 
 //result
-[ ':click :on\\3', '5', ' :nth-child\\1 ', ' :not\\2 ']
+[ ':click :on\\3', '5', ' :nth-child\\1 ', ' :not\\2 ' ]
 ```
 
 First item in the result is initial string with parentheses replaced with regexy references to other items.
@@ -15,15 +15,10 @@ First item in the result is initial string with parentheses replaced with regexy
 **Stringify** does backwise:
 
 ```js
-parenthesis.stringify(['abc\\1', '123']) === 'abc(123)'
+parenthesis.stringify([':click :on\\3', '5', ' :nth-child\\1 ', ' :not\\2 ']) === ':click :on( :not( :nth-child(5) ) )'
 ```
 
 ## API
-
-
-#### `parenthesis(arg)`
-
-Call parse or stringify depending on a type of `arg`. If `arg` is string—do parse, else stringify.
 
 
 #### `parse(str [, brackets])`
@@ -31,15 +26,15 @@ Call parse or stringify depending on a type of `arg`. If `arg` is string—do pa
 Parse parenthesis in a string `str` with optional `brackets`, like `'[]'`. Default `brackets` are `'()'`.
 
 
-#### `stringify(refsList [, entry] [, brackets])`
+#### `stringify([string,] refsList [, brackets])`
 
-Compose string from `refsList`, starting from `entry` index (by default is `0`). Example:
+Replace regexy references in `string` by the ones from `refList`. If string is undefined, use `refsList[0]`. Example:
 
 ```js
-parenthesis.stringify([ ':click :on\\3', '5', ' :nth-child\\1 ', ' :not\\2 '], 3);
+parenthesis.stringify(':not\\2', ['5', ':nth-child\\1']);
 
 //result
-' :not( :nth-child(5) ) '
+':not(:nth-child(5))'
 ```
 
 
@@ -48,6 +43,7 @@ parenthesis.stringify([ ':click :on\\3', '5', ' :nth-child\\1 ', ' :not\\2 '], 3
 
 * Add escaping (waiting for a use-case).
 * Add streaming version.
+* Pass array to the brackets, to use moustache brackets `['{{', '}}']`.
 
 
 [![NPM](https://nodei.co/npm/parenthesis.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/parenthesis/)

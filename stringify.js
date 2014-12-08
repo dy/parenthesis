@@ -8,22 +8,19 @@
  *
  * @return {string} A string with inserted regex references
  */
-module.exports = function (obj, entry, bracket){
+module.exports = function (str, refs, bracket){
 	var str, prevStr;
 
-	if (typeof entry === 'string') {
-		bracket = entry;
-		entry = 0;
-	} else {
-		bracket = bracket || '()';
-		entry = entry || 0;
+	if (typeof str !== 'string') {
+		bracket = refs;
+		refs = str;
+		str = refs[0];
 	}
 
-	str = obj[entry];
-
+	bracket = bracket || '()';
 
 	function replaceRef(token, idx, str){
-		return bracket[0] + obj[token.slice(1)] + bracket[1];
+		return bracket[0] + refs[token.slice(1)] + bracket[1];
 	}
 
 	while (str != prevStr) {

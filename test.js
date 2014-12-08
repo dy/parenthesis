@@ -1,5 +1,6 @@
 var assert = require('assert');
-var paren = require('./');
+var parse = require('./parse');
+var tostr = require('./stringify');
 
 /** testing sets */
 
@@ -49,95 +50,95 @@ var escRes = ['a \\\\1 b \\2 ', '4', ' 1 + 2 + \\\\3 + \\1'];
 
 
 describe('parse', function(){
-	it('no parenthesis', function(){
-		assert.deepEqual(paren(no), noRes);
+	it('no', function(){
+		assert.deepEqual(parse(no), noRes);
 	});
-	it('one parenthesis', function(){
-		assert.deepEqual(paren(one), oneRes);
+	it('one', function(){
+		assert.deepEqual(parse(one), oneRes);
 	});
-	it('root parenthesis', function(){
-		assert.deepEqual(paren(root), rootRes);
+	it('root', function(){
+		assert.deepEqual(parse(root), rootRes);
 	});
-	it('typical parenthesis', function(){
-		assert.deepEqual(paren(typical), typicalRes);
+	it('typical', function(){
+		assert.deepEqual(parse(typical), typicalRes);
 	});
-	it('multiple parenthesis', function(){
-		assert.deepEqual(paren(multiple), multipleRes);
+	it('multiple', function(){
+		assert.deepEqual(parse(multiple), multipleRes);
 	});
-	it('error parenthesis', function(){
-		assert.deepEqual(paren(multiple), multipleRes);
+	it('error', function(){
+		assert.deepEqual(parse(multiple), multipleRes);
 	});
-	it('dif parenthesis', function(){
-		assert.deepEqual(paren(dif, '[]'), difRes);
+	it('dif', function(){
+		assert.deepEqual(parse(dif, '[]'), difRes);
 	});
 	it.skip('escape reference', function(){
-		assert.deepEqual(paren(esc), escRes);
+		assert.deepEqual(parse(esc), escRes);
 	});
 });
 
 describe('stringify', function(){
-	it('no parenthesis', function(){
-		assert.equal(paren(noRes), no);
+	it('no', function(){
+		assert.equal(tostr(noRes), no);
 	});
-	it('one parenthesis', function(){
-		assert.equal(paren(oneRes), one);
+	it('one', function(){
+		assert.equal(tostr(oneRes), one);
 	});
-	it('root parenthesis', function(){
-		assert.equal(paren(rootRes), root);
+	it('root', function(){
+		assert.equal(tostr(rootRes), root);
 	});
-	it('typical parenthesis', function(){
-		assert.equal(paren(typicalRes), typical);
+	it('typical', function(){
+		assert.equal(tostr(typicalRes), typical);
 	});
-	it('multiple parenthesis', function(){
-		assert.equal(paren(multipleRes), multiple);
+	it('multiple', function(){
+		assert.equal(tostr(multipleRes), multiple);
 	});
-	it('error parenthesis', function(){
-		assert.equal(paren(errorRes), error);
+	it('error', function(){
+		assert.equal(tostr(errorRes), error);
 	});
-	it('dif parenthesis', function(){
-		assert.equal(paren(difRes, '[]'), dif);
+	it('dif', function(){
+		assert.equal(tostr(difRes, '[]'), dif);
 	});
 	it.skip('escape reference', function(){
-		assert.equal(paren(escRes), esc);
+		assert.equal(tostr(escRes), esc);
 	});
 
-	it('entry point', function(){
-		assert.equal(paren([ ':click :on\\3', '5', ' :nth-child\\1 ', ' :not\\2 '], 3), ' :not( :nth-child(5) ) ');
+	it('custom string point', function(){
+		assert.equal(tostr(':not\\2', [ ':click :on\\3', '5', ' :nth-child\\1 ', ' :not\\2 '], '{}'), ':not{ :nth-child{5} }');
 	});
 });
 
 
 describe('both ways', function(){
-	it('no parenthesis', function(){
-		assert.equal(paren(paren(no)), no);
-		assert.deepEqual(paren(paren(noRes)), noRes);
+	it('no', function(){
+		assert.equal(tostr(parse(no)), no);
+		assert.deepEqual(parse(tostr(noRes)), noRes);
 	});
-	it('one parenthesis', function(){
-		assert.equal(paren(paren(one)), one);
-		assert.deepEqual(paren(paren(oneRes)), oneRes);
+	it('one', function(){
+		assert.equal(tostr(parse(one)), one);
+		assert.deepEqual(parse(tostr(oneRes)), oneRes);
 	});
-	it('root parenthesis', function(){
-		assert.equal(paren(paren(root)), root);
-		assert.deepEqual(paren(paren(rootRes)), rootRes);
+	it('root', function(){
+		assert.equal(tostr(parse(root)), root);
+		assert.deepEqual(parse(tostr(rootRes)), rootRes);
 	});
-	it('typical parenthesis', function(){
-		assert.equal(paren(paren(typical)), typical);
-		assert.deepEqual(paren(paren(typicalRes)), typicalRes);
+	it('typical', function(){
+		assert.equal(tostr(parse(typical)), typical);
+		assert.deepEqual(parse(tostr(typicalRes)), typicalRes);
 	});
-	it('multiple parenthesis', function(){
-		assert.equal(paren(paren(multiple)), multiple);
-		assert.deepEqual(paren(paren(multipleRes)), multipleRes);
+	it('multiple', function(){
+		assert.equal(tostr(parse(multiple)), multiple);
+		assert.deepEqual(parse(tostr(multipleRes)), multipleRes);
 	});
-	it('error parenthesis', function(){
-		assert.equal(paren(paren(error)), error);
-		assert.deepEqual(paren(paren(errorRes)), errorRes);
+	it('error', function(){
+		assert.equal(tostr(parse(error)), error);
+		assert.deepEqual(parse(tostr(errorRes)), errorRes);
 	});
-	it('dif parenthesis', function(){
-		assert.equal(paren(paren(dif, '[]'), '[]'), dif);
-		assert.deepEqual(paren(paren(difRes, '[]'), '[]'), difRes);
+	it('dif', function(){
+		assert.equal(tostr(parse(dif, '[]'), '[]'), dif);
+		assert.deepEqual(parse(tostr(difRes, '[]'), '[]'), difRes);
 	});
 	it.skip('escape reference', function(){
-		assert.equal(paren(paren(escape)), escape);
-		assert.deepEqual(paren(paren(escapeRes)), escapeRes);
+		assert.equal(tostr(parse(escape)), escape);
+		assert.deepEqual(parse(tostr(escapeRes)), escapeRes);
 	});
 });
