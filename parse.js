@@ -10,6 +10,9 @@
 
 //TODO: implement sequential parser of this algorithm, compare performance.
 module.exports = function(str, bracket){
+	//pretend non-string parsed per-se
+	if (typeof str !== 'string') return [str];
+
 	var res = [], prevStr;
 
 	bracket = bracket || '()';

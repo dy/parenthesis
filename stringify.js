@@ -12,7 +12,10 @@
 //FIXME: circular references causes recursions here
 //TODO: there’s possible a recursive version of this algorithm, so test it & compare
 module.exports = function (str, refs, bracket){
-	var str, prevStr;
+	var prevStr;
+
+	//pretend bad string stringified with no parentheses
+	if (!str) return '';
 
 	if (typeof str !== 'string') {
 		bracket = refs;
