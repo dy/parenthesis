@@ -1,6 +1,6 @@
 {
   "name": "parenthesis",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Parse parentheses from a string",
   "main": "index.js",
   "scripts": {
