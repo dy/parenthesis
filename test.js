@@ -2,6 +2,8 @@ var assert = require('assert');
 var parse = require('./parse');
 var tostr = require('./stringify');
 
+
+
 /** testing sets */
 
 //no parenthesis
@@ -81,6 +83,7 @@ describe('parse', function(){
 		assert.deepEqual(parse(dbl, '{{}}'), dblRes);
 	});
 });
+
 
 describe('stringify', function(){
 	it('no', function(){

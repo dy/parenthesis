@@ -1,7 +1,7 @@
 # parenthesis [![Build Status](https://travis-ci.org/dfcreative/parenthesis.svg?branch=master)](https://travis-ci.org/dfcreative/parenthesis) [![Code Climate](https://codeclimate.com/github/dfcreative/parenthesis/badges/gpa.svg)](https://codeclimate.com/github/dfcreative/parenthesis) <a href="UNLICENSE"><img src="http://upload.wikimedia.org/wikipedia/commons/6/62/PD-icon.svg" width="20"/></a>
 
 
-**Parse** parentheses from a string:
+**Parse** parentheses in a string:
 
 ```js
 parenthesis.parse(':click :on( :not( :nth-child(5) ) )');
@@ -10,7 +10,7 @@ parenthesis.parse(':click :on( :not( :nth-child(5) ) )');
 [ ':click :on\\3', '5', ' :nth-child\\1 ', ' :not\\2 ' ]
 ```
 
-First item in the result is initial string with parentheses replaced with regexy references to other items.
+First item in the result is initial string with parentheses replaced with references to other items.
 
 
 **Stringify** does backwise:
@@ -32,7 +32,7 @@ Parse parenthesis in a string `str` with optional `brackets`, like `'[]'`. Defau
 
 #### `stringify([string,] refsList [, brackets])`
 
-Replace regexy references in `string` with the ones from `refList` (like tiny templates). If string is omitted, will be used `refsList[0]`. Example:
+Replace references in `string` with the ones from `refList` (like tiny templates). If string is omitted, will be used `refsList[0]`. Example:
 
 ```js
 parenthesis.stringify(':not\\2', ['5', ':nth-child\\1']);
@@ -43,11 +43,15 @@ parenthesis.stringify(':not\\2', ['5', ':nth-child\\1']);
 
 
 
-# Contribute
+## Contribute
 
-* Add double brackets (other parsing algorithm)
-* Add escaping (waiting for a use-case).
-* Add streaming version.
+* Double brackets (other parsing algorithm)
+* Escape references
+
+
+## Related
+
+* [balanced-match](http://npmjs.org/package/balanced-match)
 
 
 [![NPM](https://nodei.co/npm/parenthesis.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/parenthesis/)
