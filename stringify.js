@@ -9,7 +9,7 @@
  * @return {string} A string with inserted regex references
  */
 
-//FIXME: circular references causes recursions here
+//FIXME: circular references cause recursions here
 //TODO: there’s possible a recursive version of this algorithm, so test it & compare
 module.exports = function (str, refs, bracket){
 	var prevStr;

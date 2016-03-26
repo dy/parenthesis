@@ -1,7 +1,10 @@
 /**
  * @module parenthesis
  */
-module.exports = {
-	parse: require('./parse'),
-	stringify: require('./stringify')
-};
+
+var parse = require('./parse');
+var stringify = require('./stringify');
+parse.parse = parse;
+parse.stringify = stringify;
+
+module.exports = parse;
