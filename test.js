@@ -99,3 +99,10 @@ test('options', function () {
 		flat: true
 	}), ['a(\\1)', 'b[c{d}]']);
 });
+
+test('flat', function () {
+	var typical = 'click.super:on(:not(:nth-child(5)))'
+	var typicalRes = ['click.super:on(\\3)', '5', ':nth-child(\\1)', ':not(\\2)'];
+	assert.deepEqual(parse(typical, {flat: true, escape: '\\'}), typicalRes);
+	assert.equal(typical, stringify(typicalRes, {flat: true, escape: '\\'}));
+});

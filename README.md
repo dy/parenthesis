@@ -9,11 +9,12 @@
 var parse = require('parenthesis');
 
 
+//Parse into nested format
 parse('a(b[c{d}])');
 //⇒
 ['a(', ['b[', ['c{', ['d'], '}'], ']'], ')'];
 
-
+//Parse into flat format with cross-references
 parse('a(b[c{d}])', {
 	brackets: ['()'],
 	escape: '\\',
@@ -23,7 +24,13 @@ parse('a(b[c{d}])', {
 ['a(\\1)', 'b[c{d}]'];
 
 
+//Stringify nested format
 parse.stringify(['a(', ['b[', ['c{', ['d'], '}'], ']'], ')']);
+//⇒
+'a(b[c{d}])';
+
+//Stringify flat format with cross-references
+parse.stringify(['a(\\1)', 'b[c{d}]'], {flat: true, escape: '\\'});
 //⇒
 'a(b[c{d}])';
 ```

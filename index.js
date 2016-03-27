@@ -76,7 +76,29 @@ function parse (str, opts) {
 };
 
 
-function stringify (arg) {
+function stringify (arg, opts) {
+	if (opts && opts.flat) {
+		var escape = opts && opts.escape || '___';
+
+		var str = arg[0], prevStr;
+
+		//pretend bad string stringified with no parentheses
+		if (!str) return '';
+
+		function replaceRef(match, idx){
+			return arg[idx];
+		}
+
+		var re = new RegExp('\\' + escape + '([0-9]+)');
+
+		while (str != prevStr) {
+			prevStr = str;
+			str = str.replace(re, replaceRef);
+		}
+
+		return str;
+	}
+
 	return arg.reduce(function f (prev, curr) {
 		if (Array.isArray(curr)) {
 			curr = curr.reduce(f, '');
@@ -88,7 +110,7 @@ function stringify (arg) {
 
 function parenthesis (arg, opts) {
 	if (Array.isArray(arg)) {
-		return stringify(arg);
+		return stringify(arg, opts);
 	}
 	else {
 		return parse(arg, opts);
