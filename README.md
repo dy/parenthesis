@@ -13,7 +13,7 @@ parenthesis.parse(':click :on( :not( :nth-child(x[1]) ) )');
 [ ':click :on(\\3)', '5', ' :nth-child(\\1) ', ' :not(\\2) ' ]
 
 
-parenthesis.parse('a(b[c{d}])');
+parenthesis.parse('a(b[c{d}])', ['[]', '{}', '()']);
 //⇒
 ['a(\\3)', 'd', 'c{\\1}', 'b[\\2]']
 
