@@ -101,5 +101,5 @@ test('custom string point', function(){
 });
 
 test('multiple brackets', function () {
-	assert.deepEqual(paren('a(b[c{d}])'), ['a(\\3)', 'd', 'c{\\1}', 'b[\\2]']);
+	assert.deepEqual(paren.parse('a(b[c{d}])', ['{}', '[]', '()']), ['a(\\3)', 'd', 'c{\\1}', 'b[\\2]']);
 });
