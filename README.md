@@ -5,30 +5,14 @@
 
 ```js
 var parenthesis = require('parenthesis');
-```
 
-#### `parse(str, brackets?)`
-
-Parse parentheses in a string `str` with possible custom `brackets`, like `'[]'`. Default `brackets` are `'()'`.
-
-First item in the result is initial string with parentheses replaced with references to other items.
-
-```js
 parenthesis.parse(':click :on( :not( :nth-child(5) ) )');
-
-//result
+//⇒
 [ ':click :on(\\3)', '5', ' :nth-child(\\1) ', ' :not(\\2) ' ]
-```
 
 
-#### `stringify(string, ref1, ref2, ...)`, `stringify(refList)`
-
-Replace references in `string` with the arguments in according places (like tiny templates). Or pass `refList`, where the first item is to be stringified.
-
-```js
-parenthesis.stringify(':click :on(\\3)', '5', ' :nth-child(\\1) ', ' :not(\\2) ')
-
-//result
+parenthesis.stringify([':click :on(\\3)', '5', ' :nth-child(\\1) ', ' :not(\\2) ']);
+//⇒
 ':click :on( :not( :nth-child(5) ) )'
 ```
 
