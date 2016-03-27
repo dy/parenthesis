@@ -46,9 +46,10 @@ function parse (str, opts) {
 		});
 
 		//wrap found refs to brackets
+		ids = ids.reverse();
 		res = res.map(function (str) {
 			ids.forEach(function (id) {
-				str = str.replace(new RegExp('(\\' + escape + id + ')', 'g'), bracket[0] + '$1' + bracket[1])
+				str = str.replace(new RegExp('(\\' + escape + id + '(?![0-9]))', 'g'), bracket[0] + '$1' + bracket[1])
 			});
 			return str;
 		});

@@ -109,7 +109,13 @@ test('flat', function () {
 
 test('error flat', function () {
 	assert.throws( function () {
-		console.log(stringify(['___2'], {flat: true, escape: '___'}))
+		// console.log(stringify(['___2'], {flat: true, escape: '___'}))
 		stringify(['___5', ''], {flat: true, escape: '___'})
 	});
+});
+
+test('too many idx', function () {
+	var src = '((((a) < (b) ? (a) : (b))) < (c) ? (((a) < (b) ? (a) : (b))) : (c))';
+	var res = ["x15", "a", "b", "a", "b", "(x1) < (x2) ? (x3) : (x4)", "(x5)", "c", "a", "b", "a", "b", "(x8) < (x9) ? x10 : x11", "x12", "c", "(x6) < (x7) ? x13 : x14"];
+	assert.deepEqual(parse(src, {flat: true, escape: 'x'}), res);
 });
