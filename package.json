@@ -8,9 +8,7 @@
     "test:browser": "budo test.js"
   },
   "files": [
-    "index.js",
-    "parse.js",
-    "stringify.js"
+    "index.js"
   ],
   "repository": {
     "type": "git",

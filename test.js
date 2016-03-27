@@ -1,7 +1,7 @@
 var assert = require('assert');
-var parse = require('./parse');
-var stringify = require('./stringify');
-var paren = require('./');
+var	paren = require('./');
+var parse = paren.parse;
+var	stringify = paren.stringify;
 var test = require('tst');
 
 
@@ -16,71 +16,63 @@ test('no', function(){
 });
 test('one', function(){
 	//one parenthesis inside
-	var one = 'a\tb\nc(d)';
-	var oneRes = ['a\tb\nc(\\1)', 'd'];
-	assert.deepEqual(parse(one), oneRes);
+	var one = 'a\tb\nc(d)e';
+	var oneRes = ['a\tb\nc(', ['d'], ')e'];
+	assert.deepEqual(paren(one), oneRes);
 	assert.equal(stringify(oneRes), one);
-	assert.equal(stringify(parse(one)), one);
-	assert.deepEqual(parse(stringify(oneRes)), oneRes);
+	assert.equal(stringify(paren(one)), one);
+	assert.deepEqual(paren(stringify(oneRes)), oneRes);
 });
 test('root', function(){
 	//one root parenthesis
 	var root = '(ا فكانت الأولى النزاع لم! وعلى إستيلاء ثم سقط, وبالرغم بالقنابل جوي في. ان الإنزال باحتلال الإعتداء حشد.\n\nبل مكن فمرّ مليون البلطيق? مع الغربي العناد لتقليعة حيث, يبق أمّا طائرات ما. انتهت النمسا فعل أم, قام لم الشمال النازية،, ما حول كانتا الشرق، معارضة. لم )';
-	var rootRes = ['(\\1)', root.slice(1,-1)];
-	assert.deepEqual(parse(root), rootRes);
+	var rootRes = ['(', [root.slice(1,-1)],')'];
+	assert.deepEqual(paren(root), rootRes);
 	assert.equal(stringify(rootRes), root);
-	assert.equal(stringify(parse(root)), root);
-	assert.deepEqual(parse(stringify(rootRes)), rootRes);
+	assert.equal(stringify(paren(root)), root);
+	assert.deepEqual(paren(stringify(rootRes)), rootRes);
 });
 test('typical', function(){
 	//typical case
 	var typical = 'click.super:on(:not(:nth-child(5)))'
-	var typicalRes = ['click.super:on(\\3)', '5', ':nth-child(\\1)', ':not(\\2)'];
-	assert.deepEqual(parse(typical), typicalRes);
+	var typicalRes = ['click.super:on(', [':not(', [':nth-child(', ['5'] , ')'] ,')'] ,')'];
+	assert.deepEqual(paren(typical), typicalRes);
 	assert.equal(stringify(typicalRes), typical);
-	assert.equal(stringify(parse(typical)), typical);
-	assert.deepEqual(parse(stringify(typicalRes)), typicalRes);
+	assert.equal(stringify(paren(typical)), typical);
+	assert.deepEqual(paren(stringify(typicalRes)), typicalRes);
 });
 test('multiple', function(){
 	//multiple
 	var multiple = '( a(b c(d())) x() + z((()) ) ) ';
-	var multipleRes = [
-			'(\\8) ',
-			'',
-			'd(\\1)',
-			'b c(\\2)',
-			'',
-			'',
-			'(\\5)',
-			'(\\6) ',
-			' a(\\3) x(\\4) + z(\\7) '
-		];
-	assert.deepEqual(parse(multiple), multipleRes);
+	var multipleRes = ['(', [
+			' a(', ['b c(', ['d(', [''], ')'],')',] ,') x(', [''], ') + z(', ['(', [ '(', [''], ')'] , ') '],') '
+		], ') '];
+	assert.deepEqual(paren(multiple), multipleRes);
 	assert.equal(stringify(multipleRes), multiple);
-	assert.equal(stringify(parse(multiple)), multiple);
-	assert.deepEqual(parse(stringify(multipleRes)), multipleRes);
+	assert.equal(stringify(paren(multiple)), multiple);
+	assert.deepEqual(paren(stringify(multipleRes)), multipleRes);
 });
 test('error', function(){
 	//error
 	var error = '((1 + 2) * 3';
-	var errorRes = ['((\\1) * 3', '1 + 2'];
-	assert.deepEqual(parse(error), errorRes);
+	var errorRes = ['((', ['1 + 2'] ,') * 3'];
+	assert.deepEqual(paren(error), errorRes);
 	assert.equal(stringify(errorRes), error);
-	assert.equal(stringify(parse(error)), error);
-	assert.deepEqual(parse(stringify(errorRes)), errorRes);
+	assert.equal(stringify(paren(error)), error);
+	assert.deepEqual(paren(stringify(errorRes)), errorRes);
 });
 test('dif', function(){
 	//parens
 	var dif = '[123[4]]';
-	var difRes = ['[\\2]', '4','123[\\1]'];
-	assert.deepEqual(parse(dif), difRes);
+	var difRes = ['[', ['123[', ['4'] ,']'] ,']'];
+	assert.deepEqual(paren(dif), difRes);
 	assert.equal(stringify(difRes), dif);
-	assert.equal(stringify(parse(dif)), dif);
-	assert.deepEqual(parse(stringify(difRes), '[]'), difRes);
+	assert.equal(stringify(paren(dif)), dif);
+	assert.deepEqual(paren(stringify(difRes), '[]'), difRes);
 });
 test.skip('escape reference', function(){
 	//escape refs
-	var esc = 'a \\1 b ( 1 + 2 + \\3 + (4) ) ';
+	var esc = 'a $1 b ( 1 + 2 + $3 + (4) ) ';
 	var escRes = ['a \\\\1 b \\2 ', '4', ' 1 + 2 + \\\\3 + \\1'];
 	assert.deepEqual(parse(esc), escRes);
 	assert.equal(stringify(escRes), esc);
@@ -95,11 +87,15 @@ test.skip('moustache', function(){
 	assert.deepEqual(stringify(dblRes, ['{{', '}}']), dbl);
 });
 
-test('custom string point', function(){
-	assert.equal(stringify(':not{\\3}', ':click :on{\\4}', '5', ' :nth-child{\\2} ', ' :not{\\3} '), ':not{ :nth-child{5} }');
-	assert.equal(paren(':not{\\3}', ':click :on{\\4}', '5', ' :nth-child{\\2} ', ' :not{\\3} '), ':not{ :nth-child{5} }');
-});
-
-test('multiple brackets', function () {
-	assert.deepEqual(paren.parse('a(b[c{d}])', ['{}', '[]', '()']), ['a(\\3)', 'd', 'c{\\1}', 'b[\\2]']);
+test('options', function () {
+	assert.deepEqual(paren('a(b[c{d}])', {
+		brackets: ['{}', '[]', '()'],
+		escape: '___',
+		flat: true
+	}), ['a(___3)', 'd', 'c{___1}', 'b[___2]']);
+	assert.deepEqual(paren('a(b[c{d}])', {
+		brackets: ['()'],
+		escape: '\\',
+		flat: true
+	}), ['a(\\1)', 'b[c{d}]']);
 });

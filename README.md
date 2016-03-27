@@ -1,26 +1,30 @@
 # parenthesis [![Build Status](https://travis-ci.org/dfcreative/parenthesis.svg?branch=master)](https://travis-ci.org/dfcreative/parenthesis) [![Code Climate](https://codeclimate.com/github/dfcreative/parenthesis/badges/gpa.svg)](https://codeclimate.com/github/dfcreative/parenthesis)
 
-> Parse parentheses from a string, return list of parsed tokens with cross-references.
+> Parse parentheses from a string, return folded arrays.
 
 [![npm install parenthesis](https://nodei.co/npm/parenthesis.png?mini=true)](https://npmjs.org/package/parenthesis/)
 
 ```js
-var parenthesis = require('parenthesis');
+var parse = require('parenthesis');
 
 
-parenthesis.parse(':click :on( :not( :nth-child(x[1]) ) )');
+parse('a(b[c{d}])');
 //⇒
-[ ':click :on(\\3)', '5', ' :nth-child(\\1) ', ' :not(\\2) ' ]
+['a(', ['b[', ['c{', ['d'], '}'], ']'], ')'];
 
 
-parenthesis.parse('a(b[c{d}])', ['{}', '[]', '()']);
+parse.stringify(['a(', ['b[', ['c{', ['d'], '}'], ']'], ')']);
 //⇒
-['a(\\3)', 'd', 'c{\\1}', 'b[\\2]']
+'a(b[c{d}])';
 
 
-parenthesis.stringify([':click :on(\\3)', '5', ' :nth-child(\\1) ', ' :not(\\2) ']);
+parse('a(b[c{d}])', {
+	brackets: ['()'],
+	escape: '\\',
+	flat: true
+});
 //⇒
-':click :on( :not( :nth-child(5) ) )'
+['a(\\1)', 'b[c{d}]'];
 ```
 
 
