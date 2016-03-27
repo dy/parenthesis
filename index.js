@@ -59,7 +59,11 @@ function parse (str, opts) {
 	//transform references to tree
 	function nest (str, refs, escape) {
 		var res = [], match;
+
+		var a = 0;
 		while (match = re.exec(str)) {
+			if (a++ > 10e3) throw Error('Circular references in parenthesis');
+
 			res.push(str.slice(0, match.index));
 
 			res.push(nest(refs[match[1]], refs));
@@ -92,7 +96,9 @@ function stringify (arg, opts) {
 
 		var re = new RegExp('\\' + escape + '([0-9]+)');
 
+		var a = 0;
 		while (str != prevStr) {
+			if (a++ > 10e3) throw Error('Circular references in ' + arg);
 			prevStr = str;
 			str = str.replace(re, replaceRef);
 		}
