@@ -12,7 +12,7 @@ function parse (str, opts) {
 
 	var brackets = opts.brackets ? (Array.isArray(opts.brackets) ? opts.brackets : [opts.brackets]) : ['{}', '[]', '()'];
 
-	var escape = opts.escape || '\\';
+	var escape = opts.escape || '___';
 
 	var flat = !!opts.flat;
 
