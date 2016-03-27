@@ -3,8 +3,11 @@
 
 [![npm install parenthesis](https://nodei.co/npm/parenthesis.png?mini=true)](https://npmjs.org/package/parenthesis/)
 
+```js
+var parenthesis = require('parenthesis');
+```
 
-#### `parse(str, brackets?)`
+##### `parse(str, brackets?)`
 
 Parse parentheses in a string `str` with possible custom `brackets`, like `'[]'`. Default `brackets` are `'()'`.
 
@@ -18,10 +21,9 @@ parenthesis.parse(':click :on( :not( :nth-child(5) ) )');
 ```
 
 
-#### `stringify(string, ref1, ref2, ...)`
-#### `stringify(refList)`
+##### `stringify(string, ref1, ref2, ...)`, `stringify(refList)`
 
-Replace references in `string` with the arguments in according places (like tiny templates). Or pass `refList`, where the first item is will be stringified.
+Replace references in `string` with the arguments in according places (like tiny templates). Or pass `refList`, where the first item is to be stringified.
 
 ```js
 parenthesis.stringify(':click :on(\\3)', '5', ' :nth-child(\\1) ', ' :not(\\2) ')
