@@ -4,6 +4,7 @@
 
 [![npm install parenthesis](https://nodei.co/npm/parenthesis.png?mini=true)](https://npmjs.org/package/parenthesis/)
 
+
 ```js
 var parse = require('parenthesis');
 
@@ -13,11 +14,6 @@ parse('a(b[c{d}])');
 ['a(', ['b[', ['c{', ['d'], '}'], ']'], ')'];
 
 
-parse.stringify(['a(', ['b[', ['c{', ['d'], '}'], ']'], ')']);
-//⇒
-'a(b[c{d}])';
-
-
 parse('a(b[c{d}])', {
 	brackets: ['()'],
 	escape: '\\',
@@ -25,8 +21,12 @@ parse('a(b[c{d}])', {
 });
 //⇒
 ['a(\\1)', 'b[c{d}]'];
-```
 
+
+parse.stringify(['a(', ['b[', ['c{', ['d'], '}'], ']'], ')']);
+//⇒
+'a(b[c{d}])';
+```
 
 ## Related
 
