@@ -106,3 +106,10 @@ test('flat', function () {
 	assert.deepEqual(parse(typical, {flat: true, escape: '\\'}), typicalRes);
 	assert.equal(typical, stringify(typicalRes, {flat: true, escape: '\\'}));
 });
+
+test('error flat', function () {
+	assert.throws( function () {
+		console.log(stringify(['___2'], {flat: true, escape: '___'}))
+		stringify(['___5', ''], {flat: true, escape: '___'})
+	});
+});
