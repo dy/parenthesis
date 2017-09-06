@@ -100,6 +100,19 @@ test('options', function () {
 	}), ['a(\\1)', 'b[c{d}]']);
 });
 
+test('ignore', function() {
+	var withQuotes = 'click.super:on(:not([attr="x()"][attr2=\'y()\']))';
+	var withQuotesRes = ['click.super:on(', [':not(', ['[attr="x()"][attr2=\'y()\']'] ,')'] ,')'];
+	var opts = {
+		brackets: ['()'],
+		ignore: ['"', "'"]
+	};
+	assert.deepEqual(paren(withQuotes, opts), withQuotesRes);
+	assert.equal(stringify(withQuotesRes), withQuotes);
+	assert.equal(stringify(paren(withQuotes)), withQuotes);
+	// assert.deepEqual(paren(stringify(withQuotesRes)), withQuotesRes);
+});
+
 test('flat', function () {
 	var typical = 'click.super:on(:not(:nth-child(5)))'
 	var typicalRes = ['click.super:on(\\3)', '5', ':nth-child(\\1)', ':not(\\2)'];

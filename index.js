@@ -16,18 +16,40 @@ function parse (str, opts) {
 
 	var flat = !!opts.flat;
 
+	var ignore = opts.ignore || [];
+
 	brackets.forEach(function (bracket) {
 		//create parenthesis regex
 		var pRE = new RegExp(['\\', bracket[0], '[^\\', bracket[0], '\\', bracket[1], ']*\\', bracket[1]].join(''));
 
 		var ids = [];
+		var ignores = {};
 
 		function replaceToken(token, idx, str){
-			//save token to res
+			// save token to red
 			var refId = res.push(token.slice(bracket[0].length, -bracket[1].length)) - 1;
 
-			ids.push(refId);
+			for (var i in ignore) {
+				var ignoreChar = ignore[i];
 
+				var flag = false;
+				var parts = str.split(ignoreChar);
+
+				for (var j in parts) {
+					if (flag) {
+						// means current part was originally between 2 occurrences of @ignoreChar
+						if (-1 < parts[j].indexOf(token)) {
+							ignores[refId] = token;
+							return escape + refId;
+						}
+					}
+
+					// only every second part is relevant
+					flag = !flag;
+				}
+			}
+
+			ids.push(refId);
 			return escape + refId;
 		}
 
@@ -51,6 +73,10 @@ function parse (str, opts) {
 			ids.forEach(function (id) {
 				str = str.replace(new RegExp('(\\' + escape + id + '(?![0-9]))', 'g'), bracket[0] + '$1' + bracket[1])
 			});
+			for (var refId in ignores) {
+				var token = ignores[refId];
+				str = str.replace(escape + refId, token);
+			}
 			return str;
 		});
 	});
