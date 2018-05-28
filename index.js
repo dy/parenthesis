@@ -1,3 +1,4 @@
+'use strict'
 /**
  * @module parenthesis
  */
@@ -90,10 +91,6 @@ function stringify (arg, opts) {
 		//pretend bad string stringified with no parentheses
 		if (!str) return '';
 
-		function replaceRef(match, idx){
-			if (arg[idx] == null) throw Error('Reference ' + idx + 'is undefined')
-			return arg[idx];
-		}
 
 		var re = new RegExp('\\' + escape + '([0-9]+)');
 
@@ -113,6 +110,11 @@ function stringify (arg, opts) {
 		}
 		return prev + curr;
 	}, '');
+
+	function replaceRef(match, idx){
+		if (arg[idx] == null) throw Error('Reference ' + idx + 'is undefined')
+		return arg[idx];
+	}
 }
 
 
