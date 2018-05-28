@@ -5,129 +5,127 @@
 
 function parse (str, opts) {
 	//pretend non-string parsed per-se
-	if (typeof str !== 'string') return [str];
+	if (typeof str !== 'string') return [str]
 
-	var res = [str];
+	var res = [str]
 
-	opts = opts || {};
+	opts = opts || {}
 
-	var brackets = opts.brackets ? (Array.isArray(opts.brackets) ? opts.brackets : [opts.brackets]) : ['{}', '[]', '()'];
+	var brackets = opts.brackets ? (Array.isArray(opts.brackets) ? opts.brackets : [opts.brackets]) : ['{}', '[]', '()']
 
-	var escape = opts.escape || '___';
+	var escape = opts.escape || '___'
 
-	var flat = !!opts.flat;
+	var flat = !!opts.flat
 
 	brackets.forEach(function (bracket) {
 		//create parenthesis regex
-		var pRE = new RegExp(['\\', bracket[0], '[^\\', bracket[0], '\\', bracket[1], ']*\\', bracket[1]].join(''));
+		var pRE = new RegExp(['\\', bracket[0], '[^\\', bracket[0], '\\', bracket[1], ']*\\', bracket[1]].join(''))
 
-		var ids = [];
+		var ids = []
 
 		function replaceToken(token, idx, str){
 			//save token to res
-			var refId = res.push(token.slice(bracket[0].length, -bracket[1].length)) - 1;
+			var refId = res.push(token.slice(bracket[0].length, -bracket[1].length)) - 1
 
-			ids.push(refId);
+			ids.push(refId)
 
-			return escape + refId;
+			return escape + refId
 		}
 
 		res.forEach(function (str, i) {
-			var prevStr;
+			var prevStr
 
 			//replace paren tokens till there’s none
-			var a = 0;
+			var a = 0
 			while (str != prevStr) {
-				prevStr = str;
-				str = str.replace(pRE, replaceToken);
+				prevStr = str
+				str = str.replace(pRE, replaceToken)
 				if (a++ > 10e3) throw Error('References have circular dependency. Please, check them.')
 			}
 
-			res[i] = str;
-		});
+			res[i] = str
+		})
 
 		//wrap found refs to brackets
-		ids = ids.reverse();
+		ids = ids.reverse()
 		res = res.map(function (str) {
 			ids.forEach(function (id) {
 				str = str.replace(new RegExp('(\\' + escape + id + '(?![0-9]))', 'g'), bracket[0] + '$1' + bracket[1])
-			});
-			return str;
-		});
-	});
+			})
+			return str
+		})
+	})
 
-	var re = new RegExp('\\' + escape + '([0-9]+)');
+	var re = new RegExp('\\' + escape + '([0-9]+)')
 
 	//transform references to tree
 	function nest (str, refs, escape) {
-		var res = [], match;
+		var res = [], match
 
-		var a = 0;
+		var a = 0
 		while (match = re.exec(str)) {
-			if (a++ > 10e3) throw Error('Circular references in parenthesis');
+			if (a++ > 10e3) throw Error('Circular references in parenthesis')
 
-			res.push(str.slice(0, match.index));
+			res.push(str.slice(0, match.index))
 
-			res.push(nest(refs[match[1]], refs));
+			res.push(nest(refs[match[1]], refs))
 
-			str = str.slice(match.index + match[0].length);
+			str = str.slice(match.index + match[0].length)
 		}
 
-		res.push(str);
+		res.push(str)
 
-		return res;
+		return res
 	}
 
-	return flat ? res : nest(res[0], res);
-};
-
+	return flat ? res : nest(res[0], res)
+}
 
 function stringify (arg, opts) {
 	if (opts && opts.flat) {
-		var escape = opts && opts.escape || '___';
+		var escape = opts && opts.escape || '___'
 
-		var str = arg[0], prevStr;
+		var str = arg[0], prevStr
 
 		//pretend bad string stringified with no parentheses
-		if (!str) return '';
+		if (!str) return ''
 
 
-		var re = new RegExp('\\' + escape + '([0-9]+)');
+		var re = new RegExp('\\' + escape + '([0-9]+)')
 
-		var a = 0;
+		var a = 0
 		while (str != prevStr) {
-			if (a++ > 10e3) throw Error('Circular references in ' + arg);
-			prevStr = str;
-			str = str.replace(re, replaceRef);
+			if (a++ > 10e3) throw Error('Circular references in ' + arg)
+			prevStr = str
+			str = str.replace(re, replaceRef)
 		}
 
-		return str;
+		return str
 	}
 
 	return arg.reduce(function f (prev, curr) {
 		if (Array.isArray(curr)) {
-			curr = curr.reduce(f, '');
+			curr = curr.reduce(f, '')
 		}
-		return prev + curr;
-	}, '');
+		return prev + curr
+	}, '')
 
 	function replaceRef(match, idx){
 		if (arg[idx] == null) throw Error('Reference ' + idx + 'is undefined')
-		return arg[idx];
+		return arg[idx]
 	}
 }
-
 
 function parenthesis (arg, opts) {
 	if (Array.isArray(arg)) {
-		return stringify(arg, opts);
+		return stringify(arg, opts)
 	}
 	else {
-		return parse(arg, opts);
+		return parse(arg, opts)
 	}
 }
 
-parenthesis.parse = parse;
-parenthesis.stringify = stringify;
+parenthesis.parse = parse
+parenthesis.stringify = stringify
 
-module.exports = parenthesis;
+module.exports = parenthesis
