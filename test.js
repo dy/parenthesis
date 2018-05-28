@@ -96,6 +96,7 @@ t.skip('moustache', function(t) {
 	t.end()
 });
 
+
 t('options', function (t) {
 	t.deepEqual(paren('a(b[c{d}])', {
 		brackets: ['{}', '[]', '()'],
@@ -107,6 +108,11 @@ t('options', function (t) {
 		escape: '\\',
 		flat: true
 	}), ['a(\\1)', 'b[c{d}]']);
+	t.end()
+});
+
+t('same brackets', function (t) {
+	t.deepEqual(parse('abc "def" ghi', '""'), ['abc "', ['def'], '" ghi'])
 	t.end()
 });
 

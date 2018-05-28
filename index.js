@@ -1,15 +1,19 @@
 'use strict'
+
 /**
  * @module parenthesis
  */
 
 function parse (str, opts) {
-	//pretend non-string parsed per-se
+	// pretend non-string parsed per-se
 	if (typeof str !== 'string') return [str]
 
 	var res = [str]
 
-	opts = opts || {}
+	if (typeof opts === 'string' || Array.isArray(opts)) {
+		opts = {brackets: opts}
+	}
+	else if (!opts) opts = {}
 
 	var brackets = opts.brackets ? (Array.isArray(opts.brackets) ? opts.brackets : [opts.brackets]) : ['{}', '[]', '()']
 
@@ -18,13 +22,13 @@ function parse (str, opts) {
 	var flat = !!opts.flat
 
 	brackets.forEach(function (bracket) {
-		//create parenthesis regex
+		// create parenthesis regex
 		var pRE = new RegExp(['\\', bracket[0], '[^\\', bracket[0], '\\', bracket[1], ']*\\', bracket[1]].join(''))
 
 		var ids = []
 
 		function replaceToken(token, idx, str){
-			//save token to res
+			// save token to res
 			var refId = res.push(token.slice(bracket[0].length, -bracket[1].length)) - 1
 
 			ids.push(refId)
@@ -35,7 +39,7 @@ function parse (str, opts) {
 		res.forEach(function (str, i) {
 			var prevStr
 
-			//replace paren tokens till there’s none
+			// replace paren tokens till there’s none
 			var a = 0
 			while (str != prevStr) {
 				prevStr = str
@@ -46,7 +50,7 @@ function parse (str, opts) {
 			res[i] = str
 		})
 
-		//wrap found refs to brackets
+		// wrap found refs to brackets
 		ids = ids.reverse()
 		res = res.map(function (str) {
 			ids.forEach(function (id) {
@@ -58,7 +62,7 @@ function parse (str, opts) {
 
 	var re = new RegExp('\\' + escape + '([0-9]+)')
 
-	//transform references to tree
+	// transform references to tree
 	function nest (str, refs, escape) {
 		var res = [], match
 
@@ -87,7 +91,7 @@ function stringify (arg, opts) {
 
 		var str = arg[0], prevStr
 
-		//pretend bad string stringified with no parentheses
+		// pretend bad string stringified with no parentheses
 		if (!str) return ''
 
 

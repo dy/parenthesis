@@ -30,6 +30,22 @@ parse.stringify(['a(\\1)', 'b[c{d}]'], {flat: true, escape: '\\'})
 // 'a(b[c{d}])'
 ```
 
+## API
+
+### tokens = paren.parse(string, brackets|opts?)
+
+Return array with tokens.
+
+Option | Default | Meaning
+---|---|---
+`brackets` | `['{}', '[]', '()']` | Single brackets string or list of strings to detect brackets. Can be repeating brackets eg. `"" or ''`.
+`escape` | `'___'` | Escape prefix for flat references.
+`flat` | `false` | Return flat array instead of nested arrays.
+
+### str = paren.stringify(tokens, {flat}?)
+
+Stringify tokens back. Pass `{flat: true}` flag for flat tokens array.
+
 ## Related
 
 * [balanced-match](http://npmjs.org/package/balanced-match)
