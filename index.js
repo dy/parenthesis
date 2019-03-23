@@ -79,7 +79,6 @@ function parse (str, opts) {
 
 		res.push(str)
 
-		console.log(res)
 		return res
 	}
 
