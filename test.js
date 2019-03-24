@@ -102,12 +102,12 @@ t('options', function (t) {
 		brackets: ['{}', '[]', '()'],
 		escape: '___',
 		flat: true
-	}), ['a(___3___)', 'd', 'c{___1___}', 'b[___2___]']);
+	}), ['a(___3)', 'd', 'c{___1}', 'b[___2]']);
 	t.deepEqual(paren('a(b[c{d}])', {
 		brackets: ['()'],
 		escape: '\\',
 		flat: true
-	}), ['a(\\1\\)', 'b[c{d}]']);
+	}), ['a(\\1)', 'b[c{d}]']);
 	t.end()
 });
 
@@ -118,7 +118,7 @@ t('same brackets', function (t) {
 
 t('flat', function (t) {
 	var typical = 'click.super:on(:not(:nth-child(5)))'
-	var typicalRes = ['click.super:on(\\3\\)', '5', ':nth-child(\\1\\)', ':not(\\2\\)'];
+	var typicalRes = ['click.super:on(\\3)', '5', ':nth-child(\\1)', ':not(\\2)'];
 	t.deepEqual(parse(typical, {flat: true, escape: '\\'}), typicalRes);
 	t.equal(typical, stringify(typicalRes, {flat: true, escape: '\\'}));
 	t.end()
@@ -127,25 +127,14 @@ t('flat', function (t) {
 t('error flat', function (t) {
 	t.throws( function (t) {
 		// console.log(stringify(['___2'], {flat: true, escape: '___'}))
-		stringify(['___5___', ''], {flat: true, escape: '___'})
+		stringify(['___5', ''], {flat: true, escape: '___'})
 	});
 	t.end()
 });
 
 t('too many idx', function (t) {
 	var src = '((((a) < (b) ? (a) : (b))) < (c) ? (((a) < (b) ? (a) : (b))) : (c))';
-	var res = ["x15x", "a", "b", "a", "b", "(x1x) < (x2x) ? (x3x) : (x4x)", "(x5x)", "c", "a", "b", "a", "b", "(x8x) < (x9x) ? x10x : x11x", "x12x", "c", "(x6x) < (x7x) ? x13x : x14x"];
+	var res = ["x15", "a", "b", "a", "b", "(x1) < (x2) ? (x3) : (x4)", "(x5)", "c", "a", "b", "a", "b", "(x8) < (x9) ? x10 : x11", "x12", "c", "(x6) < (x7) ? x13 : x14"];
 	t.deepEqual(parse(src, {flat: true, escape: 'x'}), res);
-	t.end()
-});
-
-t('number after parenthesis', function(t) {
-	//number appears immediately after the closing parenthesis
-	var turtleInstructions = 'r ((m2 r)4 m3)2';
-	var turtleInstructionsRes = ["r (", ["(", ["m2 r"], ")4 m3"], ")2"];
-	t.deepEqual(paren(turtleInstructions), turtleInstructionsRes);
-	t.equal(stringify(turtleInstructionsRes), turtleInstructions);
-	t.equal(stringify(paren(turtleInstructions)), turtleInstructions);
-	t.deepEqual(paren(stringify(turtleInstructionsRes)), turtleInstructionsRes);
 	t.end()
 });
