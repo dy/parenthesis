@@ -40,5 +40,6 @@
   "devDependencies": {
     "tape": "^4.9.0"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "types": "index.d.ts"
 }
