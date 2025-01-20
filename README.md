@@ -1,4 +1,4 @@
-# parenthesis [![Build Status](https://travis-ci.org/dy/parenthesis.svg?branch=master)](https://travis-ci.org/dy/parenthesis)
+# parenthesis 
 
 Parse parentheses from a string, return folded arrays.
 
